@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <h1>Alerts</h1>
+</div>
+
+<div class="panel">
+  <div class="table-controls">
+    <select id="filter-severity">
+      <option value="">All severities</option>
+      <option value="CRITICAL">Critical</option>
+      <option value="HIGH">High</option>
+      <option value="MEDIUM">Medium</option>
+      <option value="LOW">Low</option>
+      <option value="INFO">Info</option>
+    </select>
+    <select id="filter-status">
+      <option value="">All statuses</option>
+      <option value="NEW">New</option>
+      <option value="ACKNOWLEDGED">Acknowledged</option>
+      <option value="IN_PROGRESS">In progress</option>
+      <option value="RESOLVED">Resolved</option>
+      <option value="FALSE_POSITIVE">False positive</option>
+    </select>
+    <button class="btn btn-sm" onclick="SentinelSOC.pages.alertsList()">Refresh</button>
+  </div>
+  <div class="table-scroll">
+    <table id="alerts-table">
+      <thead><tr><th>Severity</th><th>Rule</th><th>Category</th><th>Process / Account</th><th>Score</th><th>Status</th><th>When</th></tr></thead>
+      <tbody><tr><td colspan="7" class="empty-state">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>document.addEventListener('DOMContentLoaded', SentinelSOC.pages.alertsList);</script>
+{% endblock %}

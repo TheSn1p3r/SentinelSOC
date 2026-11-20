@@ -1,0 +1,62 @@
+# SentinelSOC configuration
+# Paths are relative to the application's working directory (the install
+# root) unless given as absolute paths. The installer (scripts/install.ps1)
+# sets up ./data, ./logs and ./quarantine under the install root.
+
+agent:
+  name: SentinelSOC
+  poll_interval_seconds: 5
+
+database:
+  path: "./data/sentinelsoc.db"
+
+logging:
+  level: INFO
+  log_dir: "./logs"
+  max_bytes: 10485760       # 10 MB per log file
+  backup_count: 5
+
+collectors:
+  event_log:
+    enabled: true
+    logs: ["Security", "System", "Application"]
+    # Optional, higher-fidelity source if Sysinternals Sysmon is installed.
+    # If the log doesn't exist, it is skipped with a warning (not an error).
+    sysmon_log: "Microsoft-Windows-Sysmon/Operational"
+    use_sysmon_if_available: true
+    poll_interval_seconds: 5
+  process_monitor:
+    enabled: true
+    poll_interval_seconds: 5
+  network_monitor:
+    enabled: true
+    poll_interval_seconds: 5
+
+detection:
+  correlation_window_seconds: 300
+  suspicious_path_segments:
+    - "\\temp\\"
+    - "\\appdata\\local\\temp\\"
+    - "\\users\\public\\"
+    - "\\downloads\\"
+    - "\\programdata\\"
+  # One IP or CIDR per line, '#' comments allowed. Empty by default — this
+  # agent does local/offline analysis only and ships no live threat feed.
+  blocklist_ips_file: "./config/blocklist_ips.txt"
+  rules_overrides_file: null   # optional path to a YAML file disabling/tuning built-in rules
+
+response:
+  # The detection engine may PROPOSE a response action on a CRITICAL alert,
+  # but every action requires an explicit analyst decision before it runs.
+  # There is no fully-automatic response path.
+  auto_propose_on_critical: true
+  quarantine_dir: "./quarantine"
+
+api:
+  host: "127.0.0.1"     # change deliberately if you need LAN access; see docs/DOCUMENTATION.md
+  port: 8765
+  api_key: null          # auto-generated into this file on first run if left null
+
+dashboard:
+  title: "SentinelSOC"
+  refresh_seconds: 10

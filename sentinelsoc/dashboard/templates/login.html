@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} — Sign in</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="login-shell">
+    <div class="login-card">
+      <div class="brand">
+        <span class="dot"></span>
+        <span class="wordmark">Sentinel<span>SOC</span></span>
+      </div>
+      {% if error %}<div class="error">{{ error }}</div>{% endif %}
+      <form method="post" action="/login">
+        <label for="api_key">Analyst key</label>
+        <input type="password" id="api_key" name="api_key" autofocus required>
+        <button type="submit" class="btn btn-accent" style="width:100%">Sign in</button>
+      </form>
+      <div class="hint">
+        The key lives in <span class="mono">config/config.yaml</span> under
+        <span class="mono">api.api_key</span> on this machine. There's no
+        password reset — if you lose it, read it from that file.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

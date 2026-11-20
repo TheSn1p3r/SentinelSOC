@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    # The Windows-only pieces (Event Log collection, the Windows Service
+    # wrapper) can't run here — pywin32 only installs on Windows, and
+    # requirements.txt marks it platform-conditional accordingly. This job
+    # covers everything else: the database layer, detection engine,
+    # scoring, incident correlation, response actions, and the full
+    # FastAPI app/dashboard, exactly as validated during development.
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Syntax-check every Python file (including the Windows-only ones)
+        run: |
+          find . -name "*.py" -not -path "./.venv/*" -print0 | xargs -0 -n1 python -m py_compile
+
+      - name: Run tests
+        run: pytest -v

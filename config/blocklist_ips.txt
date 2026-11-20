@@ -1,0 +1,9 @@
+# SentinelSOC local IP blocklist
+# One IP address or CIDR block per line. Lines starting with # are ignored.
+# This agent performs local/offline analysis only — it does not fetch a
+# live threat intelligence feed. Populate this file yourself from whatever
+# indicator sources your organization trusts.
+#
+# Example (TEST-NET-3, reserved for documentation per RFC 5737 — replace
+# with real indicators relevant to you):
+# 203.0.113.0/24

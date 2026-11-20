@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <h1>Monitoring</h1>
+  <span class="meta">Live snapshot — refreshes every {{ refresh_seconds }}s</span>
+</div>
+
+<div class="panel">
+  <h2>Processes</h2>
+  <div class="table-scroll">
+    <table id="processes-table">
+      <thead><tr><th>PID</th><th>Name</th><th>User</th><th>CPU%</th><th>Mem (MB)</th><th>Path</th></tr></thead>
+      <tbody><tr><td colspan="6" class="empty-state">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Network connections</h2>
+  <div class="table-scroll">
+    <table id="network-table">
+      <thead><tr><th>Process</th><th>PID</th><th>Local</th><th>Remote</th><th>Proto</th><th>Status</th><th></th></tr></thead>
+      <tbody><tr><td colspan="7" class="empty-state">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>document.addEventListener('DOMContentLoaded', SentinelSOC.pages.monitoring);</script>
+{% endblock %}

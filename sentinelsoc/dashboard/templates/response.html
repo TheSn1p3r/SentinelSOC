@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <h1>Response</h1>
+</div>
+
+<div class="panel">
+  <h2>Propose an action</h2>
+  <div class="action-row" style="margin-bottom:10px">
+    <input type="text" id="tp-pid" placeholder="PID to terminate" style="width:140px">
+    <input type="text" id="tp-reason" placeholder="Reason" style="flex:1;min-width:200px">
+    <button class="btn" onclick="SentinelSOC.pages.proposeTerminate()">Propose termination</button>
+  </div>
+  <div class="action-row">
+    <input type="text" id="qf-path" placeholder="Full file path to quarantine" style="flex:1;min-width:260px">
+    <input type="text" id="qf-reason" placeholder="Reason" style="flex:1;min-width:200px">
+    <button class="btn" onclick="SentinelSOC.pages.proposeQuarantine()">Propose quarantine</button>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Pending your decision</h2>
+  <div class="table-scroll">
+    <table id="pending-actions-table">
+      <thead><tr><th>Type</th><th>Target</th><th>Reason</th><th>Requested by</th><th>When</th><th>Decision</th></tr></thead>
+      <tbody><tr><td colspan="6" class="empty-state">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Action history</h2>
+  <div class="table-scroll">
+    <table id="action-history-table">
+      <thead><tr><th>Type</th><th>Target</th><th>Status</th><th>Decided by</th><th>Result</th></tr></thead>
+      <tbody><tr><td colspan="5" class="empty-state">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Quarantine</h2>
+  <div class="table-scroll">
+    <table id="quarantine-table">
+      <thead><tr><th>Original path</th><th>SHA-256</th><th>Size</th><th>Quarantined</th><th></th></tr></thead>
+      <tbody><tr><td colspan="5" class="empty-state">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>document.addEventListener('DOMContentLoaded', SentinelSOC.pages.response);</script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <h1>Overview</h1>
+  <span class="meta" id="hostline">—</span>
+</div>
+
+<div class="panel">
+  <h2>Agent status</h2>
+  <div class="status-strip" id="status-strip">
+    <div class="empty-state">Loading…</div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Awaiting your decision</h2>
+  <div class="table-scroll">
+    <table id="pending-table">
+      <thead><tr><th>Type</th><th>Target</th><th>Reason</th><th>Requested by</th><th>When</th><th></th></tr></thead>
+      <tbody><tr><td colspan="6" class="empty-state">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Recent alerts</h2>
+  <div class="table-scroll">
+    <table id="recent-alerts-table">
+      <thead><tr><th>Severity</th><th>Rule</th><th>Process / Account</th><th>Score</th><th>Status</th><th>When</th></tr></thead>
+      <tbody><tr><td colspan="6" class="empty-state">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>document.addEventListener('DOMContentLoaded', SentinelSOC.pages.overview);</script>
+{% endblock %}

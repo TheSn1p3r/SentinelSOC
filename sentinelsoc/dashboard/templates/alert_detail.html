@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <h1>Alert #{{ alert_id }}</h1>
+  <a href="/alerts" class="meta">&larr; back to alerts</a>
+</div>
+
+<div id="alert-body"><div class="empty-state">Loading…</div></div>
+{% endblock %}
+{% block scripts %}
+<script>document.addEventListener('DOMContentLoaded', function(){ SentinelSOC.pages.alertDetail({{ alert_id }}); });</script>
+{% endblock %}
