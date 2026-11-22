@@ -51,7 +51,23 @@ def _session_valid(token: str | None) -> bool:
     return True
 
 
+def _auth_disabled(request: Request) -> bool:
+    """True when `api.auth_disabled` is set in config.yaml.
+
+    Convenience mode for single-user local deployments: opens every page
+    and API route without the analyst key. Only sensible when the app is
+    reachable by the owner alone (e.g. bound to 127.0.0.1 or behind a
+    trusted gateway) — do NOT combine with a LAN-exposed host.
+    """
+    agent = getattr(request.app.state, "agent", None)
+    if agent is None:
+        return False
+    return bool(agent.config.get("api.auth_disabled", False))
+
+
 def has_valid_session(request: Request) -> bool:
+    if _auth_disabled(request):
+        return True
     return _session_valid(request.cookies.get(SESSION_COOKIE))
 
 
@@ -78,6 +94,8 @@ async def require_page_auth(request: Request):
 async def require_api_auth(request: Request) -> None:
     """For JSON API routes: raises 401 so a fetch() call gets a clean
     status code to branch on."""
+    if _auth_disabled(request):
+        return
     if has_valid_session(request) or check_api_key_header(request):
         return
     raise HTTPException(status_code=401, detail="Unauthorized — log in or supply X-API-Key")

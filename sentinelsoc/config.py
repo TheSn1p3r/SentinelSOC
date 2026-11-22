@@ -74,6 +74,11 @@ DEFAULTS: dict[str, Any] = {
         "host": "127.0.0.1",
         "port": 8765,
         "api_key": None,
+        # No-login convenience mode for single-user local use. Only safe
+        # when the dashboard is reachable by the owner alone (loopback
+        # binding or a trusted gateway in front) — never expose this
+        # combination to a LAN.
+        "auth_disabled": False,
     },
     "dashboard": {
         "title": "SentinelSOC",

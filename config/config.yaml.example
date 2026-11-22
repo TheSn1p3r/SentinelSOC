@@ -55,6 +55,9 @@ response:
 api:
   host: "127.0.0.1"     # change deliberately if you need LAN access; see docs/DOCUMENTATION.md
   port: 8765
+  auth_disabled: false   # true = dashboard/API open with NO analyst key (single-user
+                         # local convenience mode). Only safe when the app is reachable
+                         # by the owner alone — never combine with a LAN-exposed host.
   api_key: null          # auto-generated into this file on first run if left null
 
 dashboard:
