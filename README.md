@@ -1,6 +1,6 @@
 # SentinelSOC
 
-![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/TheSn1p3r/SentinelSOC/actions/workflows/ci.yml/badge.svg)
 
 A local Windows SOC agent: it watches a Windows 10/11 machine (Event Log,
 processes, network connections), runs that telemetry through an offline
@@ -103,6 +103,9 @@ log (`/api/audit`).
   a session from logging in with it) for every request — including the
   JSON API. Change `api.host` deliberately if you need LAN access, and see
   "Exposing the dashboard beyond localhost" in `docs/DOCUMENTATION.md` first.
+  For single-user convenience you can set `api.auth_disabled: true` to open
+  the dashboard with no key at all — only sensible while it stays bound to
+  localhost.
 - **No changes to other security tools.** The installer does not add
   Windows Defender exclusions or otherwise weaken endpoint protection —
   that's a judgment call left to you, deliberately not automated here.
@@ -137,5 +140,4 @@ Full details, configuration reference, architecture, and the API are in
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE). Update the copyright line in that file with
-your own name/organization before or after pushing; it's a placeholder.
+MIT — see [`LICENSE`](LICENSE).
